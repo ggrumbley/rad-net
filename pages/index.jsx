@@ -1,4 +1,6 @@
-export default function Home() {
+import React, { useEffect } from 'react';
+
+const Home = () => {
   return (
     <div>
       <header>
@@ -10,4 +12,6 @@ export default function Home() {
       <a href="#">TEST</a>
     </div>
   );
-}
+};
+
+export default Home;
