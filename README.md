@@ -1,3 +1,3 @@
 # Rad NET
 
-🖥️💾 Socialize online like it's 1985 💾🖥️
+🖥️💾 A Reddit clone with that Eighties Vibe 💾🖥️

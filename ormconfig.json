@@ -1,0 +1,24 @@
+{
+  "type": "postgres",
+  "host": "localhost",
+  "port": 5432,
+  "username": "gary",
+  "password": "Furious564!",
+  "database": "radnet",
+  "synchronize": true,
+  "logging": false,
+  "entities": [
+    "src/models/**/*.ts"
+  ],
+  "migrations": [
+    "src/migrations/**/*.ts"
+  ],
+  "subscribers": [
+    "src/subscribers/**/*.ts"
+  ],
+  "cli": {
+    "entitiesDir": "src/models",
+    "migrationsDir": "src/migrations",
+    "subscribersDir": "src/subscribers"
+  }
+}
