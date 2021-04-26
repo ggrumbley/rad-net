@@ -9,3 +9,77 @@ datasource db {
 generator client {
   provider = "prisma-client-js"
 }
+
+model Sub {
+  id          Int      @id @default(autoincrement())
+  name        String   @unique
+  title       String
+  description String?
+  image       String?
+  banner      String?
+  posts       Post[]
+  user        User?    @relation(fields: [username], references: [username])
+  username    String?
+  createdAt   DateTime @default(now()) @map(name: "created_at")
+  updatedAt   DateTime @updatedAt @map(name: "updated_at")
+}
+
+model Post {
+  id         Int      @id @default(autoincrement())
+  title      String
+  slug       String
+  body       String?
+  published  Boolean  @default(false)
+  author     User?    @relation(fields: [authorName], references: [username])
+  authorName String?
+  sub        Sub?     @relation(fields: [subName], references: [name])
+  subName    String?
+  createdAt  DateTime @default(now()) @map(name: "created_at")
+  updatedAt  DateTime @updatedAt @map(name: "updated_at")
+}
+
+model User {
+  id            Int       @id @default(autoincrement())
+  name          String?
+  username      String    @unique
+  email         String    @unique
+  emailVerified DateTime? @map(name: "email_verified")
+  image         String?
+  posts         Post[]
+  createdAt     DateTime  @default(now()) @map(name: "created_at")
+  updatedAt     DateTime  @updatedAt @map(name: "updated_at")
+
+  Sub Sub[]
+  @@map(name: "users")
+}
+
+model Account {
+  id                 Int       @id @default(autoincrement())
+  compoundId         String    @unique @map(name: "compound_id")
+  userId             Int       @map(name: "user_id")
+  providerType       String    @map(name: "provider_type")
+  providerId         String    @map(name: "provider_id")
+  providerAccountId  String    @map(name: "provider_account_id")
+  refreshToken       String?   @map(name: "refresh_token")
+  accessToken        String?   @map(name: "access_token")
+  accessTokenExpires DateTime? @map(name: "access_token_expires")
+  createdAt          DateTime  @default(now()) @map(name: "created_at")
+  updatedAt          DateTime  @default(now()) @map(name: "updated_at")
+
+  @@index([providerAccountId], name: "providerAccountId")
+  @@index([providerId], name: "providerId")
+  @@index([userId], name: "userId")
+  @@map(name: "accounts")
+}
+
+model Session {
+  id           Int      @id @default(autoincrement())
+  userId       Int      @map(name: "user_id")
+  expires      DateTime
+  sessionToken String   @unique @map(name: "session_token")
+  accessToken  String   @unique @map(name: "access_token")
+  createdAt    DateTime @default(now()) @map(name: "created_at")
+  updatedAt    DateTime @default(now()) @map(name: "updated_at")
+
+  @@map(name: "sessions")
+}
